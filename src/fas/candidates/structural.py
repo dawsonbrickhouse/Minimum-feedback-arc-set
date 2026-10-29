@@ -6,7 +6,8 @@ import itertools
 import random
 
 from ..generators import random_digraph
-from ..graph import Arc, Graph, reachable, weakly_connected_components
+from ..boundary import boundary_function, three_terminal_gadget
+from ..graph import Arc, Graph, reachable, topological_order, weakly_connected_components
 from .base import Application, CandidateRule, Match, Oracle, Status
 from .common import heavy_weight, make_undeletable
 
@@ -214,6 +215,93 @@ class TwoTerminalSeparator(CandidateRule):
         return Graph(range(2 + k1 + k2), mult)
 
 
+class ThreeTerminalGadget(CandidateRule):
+    name = "three_terminal_gadget"
+    title = "Replace the far side of a 3-vertex separator by a gadget with <= 2 internal vertices"
+    statuses = (Status.PROVED_WITHIN_STATED_ASSUMPTIONS, Status.NOVELTY_UNVERIFIED)
+    expected = "true"
+    pattern = "terminals T = {x, y, z} and a weak component C of G - T; G2 = arcs touching C, G1 = G - C"
+    preconditions = "no arc joins C to a vertex outside C + T"
+    transformation = (
+        "compute f_G2 on the 6 orders of T; G' = G1 + weighted gadget H (stars on <= 2 new vertices "
+        "plus arcs among T) with f_H = f_G2 - c"
+    )
+    claimed_identity = "OPT(G) = OPT(G') + c"
+    proof_sketch = (
+        "OPT(G) = min_sigma f_G1(sigma) + f_G2(sigma) (boundary functions add under gluing). Functions "
+        "on the 6 orders split into a pairwise part (constant + 3 pair indicators, realisable by arcs "
+        "among T) and a 2-dimensional residual; the three one-vertex stars have residuals [1,0], [0,1], "
+        "[-1,-1], which generate all integer residuals with non-negative coefficients using at most two "
+        "of them. Full proof: docs/proof_obligations.md (PO-5)."
+    )
+    open_questions = (
+        "Gadgets are weighted. Smallest unweighted gadgets? Does a bounded-size gadget family exist "
+        "for 4 terminals (24 orders, residual dimension 17)?"
+    )
+
+    def find_matches(self, g: Graph) -> list[Match]:
+        matches: list[Match] = []
+        for terms in itertools.combinations(g.vertices, 3):
+            rest = g.remove_vertices(terms)
+            for comp in weakly_connected_components(rest):
+                comp_set = set(comp)
+                if any(a in comp_set or b in comp_set for (a, b), _ in g.induced_subgraph([*comp, *terms]).arcs()):
+                    matches.append({"terminals": list(terms), "component": list(comp)})
+        return matches
+
+    def check_preconditions(self, g: Graph, match: Match) -> str | None:
+        terms = tuple(match.get("terminals", ()))
+        comp = frozenset(match.get("component", ()))
+        if len(set(terms)) != 3 or not comp or comp & set(terms) or not all(g.has_vertex(v) for v in (*terms, *comp)):
+            return f"malformed match {match}"
+        for (a, b), _ in g.arcs():
+            if (a in comp) != (b in comp) and not ({a, b} - comp) <= set(terms):
+                return f"arc ({a},{b}) joins C to a vertex outside C + T"
+        return None
+
+    def apply(self, g: Graph, match: Match, oracle: Oracle) -> Application:
+        terms: tuple[int, int, int] = tuple(match["terminals"])  # type: ignore[assignment]
+        comp = frozenset(match["component"])
+        g1 = g.remove_vertices(comp)
+        g2 = Graph([*comp, *terms], {(a, b): k for (a, b), k in g.arcs() if a in comp or b in comp})
+        f2 = boundary_function(g2, terms, oracle)
+        gadget, const = three_terminal_gadget(f2, terms, max(g.vertices) + 1, oracle)
+        reduced = g1.with_arcs(dict(gadget.arcs())) if gadget.num_arc_pairs else g1
+        reduced = Graph(sorted(set(reduced.vertices) | set(gadget.vertices)), dict(reduced.arcs()))
+        g1_pairs = frozenset(g1.arc_pairs())
+        big = g2.m + 1
+
+        def lift(removed: frozenset[Arc]) -> frozenset[Arc]:
+            order = topological_order(reduced.remove_arc_pairs(removed))
+            if order is None:
+                raise ValueError("reduced solution is not a FAS")
+            sigma = tuple(v for v in order if v in terms)
+            forced = g2.with_arcs({(sigma[i], sigma[i + 1]): big for i in range(2)})
+            side2 = oracle.solve(forced).removed_arcs
+            return frozenset(a for a in removed if a in g1_pairs) | side2
+
+        return Application(reduced, const, lift, note=f"boundary function {f2}")
+
+    def explain_preconditions(self, g: Graph, match: Match) -> str:
+        return (f"terminals {match['terminals']}; component C={match['component']} of G - T has no arcs "
+                "to vertices outside C + T (checked arc by arc)")
+
+    def generate(self, rng: random.Random, n: int) -> Graph | None:
+        terms = [0, 1, 2]
+        k1 = rng.randint(1, max(1, (n - 3) // 2))
+        side_a = list(range(3, 3 + k1))
+        side_b = list(range(3 + k1, max(n, 5 + k1)))
+        mult: dict[Arc, int] = {}
+        for part in (side_a, side_b):
+            for u, v in itertools.permutations([*terms, *part], 2):
+                if (u in part or v in part) and rng.random() < 0.35:
+                    mult[(u, v)] = 1
+        for u, v in itertools.permutations(terms, 2):
+            if rng.random() < 0.2:
+                mult[(u, v)] = 1
+        return Graph(range(max(n, 5 + k1)), mult)
+
+
 # ---------------------------------------------------------------------- exchange / dominance rules
 
 
@@ -359,6 +447,7 @@ class ArcDomination(CandidateRule):
 
 __all__ = [
     "ArcDomination",
+    "ThreeTerminalGadget",
     "InDegreeOneExchange",
     "ModuleContraction",
     "NeighborhoodDominance",

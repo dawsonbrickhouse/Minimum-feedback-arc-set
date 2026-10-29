@@ -13,6 +13,7 @@ from .structural import (
     InDegreeOneExchange,
     ModuleContraction,
     NeighborhoodDominance,
+    ThreeTerminalGadget,
     TwoTerminalSeparator,
 )
 from .two_cycle_cancellation import TwoCycleCancellation
@@ -23,6 +24,7 @@ _RULES: list[CandidateRule] = [
     TwoCycleCancellation(),
     ModuleContraction(),
     TwoTerminalSeparator(),
+    ThreeTerminalGadget(),
     NeighborhoodDominance(),
     InDegreeOneExchange(),
     ArcDomination(),

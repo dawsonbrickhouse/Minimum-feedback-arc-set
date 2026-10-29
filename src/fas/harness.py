@@ -196,10 +196,23 @@ class SearchSummary:
         return d
 
 
+PROFILES: dict[str, SearchConfig] = {
+    "quick": SearchConfig(
+        exhaustive=[("digraph", n) for n in range(1, 5)],
+        random_families=[("sparse", 7, 30), ("multigraph", 6, 30), ("dense", 6, 30)],
+        targeted=[(6, 40)], max_seconds=60.0),
+    "standard": SearchConfig(),
+    "deep": SearchConfig(
+        exhaustive=[("digraph", n) for n in range(1, 6)] + [("oriented", 6), ("tournament", 7)],
+        random_families=[("sparse", 9, 400), ("dense", 8, 300), ("multigraph", 7, 300),
+                         ("planted", 10, 200), ("scc_dag", 12, 100), ("overlapping_cycles", 9, 100),
+                         ("tournament", 8, 200), ("repeated_triangle", 9, 100)],
+        targeted=[(7, 400), (10, 200)], max_seconds=1800.0),
+}
+
+
 def _sources(rule: CandidateRule, cfg: SearchConfig) -> Iterator[tuple[str, Graph | None]]:
     for kind, n in cfg.exhaustive:
-        if kind not in rule.exhaustive_kinds and kind != "digraph":
-            continue
         for g in isomorphism_classes(n, kind):  # type: ignore[arg-type]
             yield f"exhaustive:{kind}:n={n}", g
     for family, n, count in cfg.random_families:

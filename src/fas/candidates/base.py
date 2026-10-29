@@ -97,7 +97,6 @@ class CandidateRule(ABC):
     proof_sketch: ClassVar[str] = "none yet"
     open_questions: ClassVar[str] = ""
     expected: ClassVar[str] = "unknown"  # "true", "false" or "unknown": the author's prior, for reporting only
-    exhaustive_kinds: ClassVar[tuple[str, ...]] = ("digraph",)
 
     @abstractmethod
     def find_matches(self, g: Graph) -> list[Match]:
