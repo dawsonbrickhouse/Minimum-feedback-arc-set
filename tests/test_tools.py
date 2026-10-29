@@ -2,8 +2,10 @@
 
 import json
 
+import pytest
+
 from fas import mining
-from fas.benchmark import run_benchmark, summarize
+from fas.benchmark import run_benchmark, summarize, validate_config
 from fas.boundary import boundary_function, pairwise_decomposition, star_templates, three_terminal_gadget
 from fas.candidates import Oracle
 from fas.cli import main
@@ -54,6 +56,28 @@ def test_benchmark_smoke():
     assert all(r["solution_valid"] for r in rows if r["completed"])
     assert any(not r["completed"] for r in rows)  # plain DP skipped above its limit
     assert {s["pipeline"] for s in summarize(rows)} == set(cfg["pipelines"])
+
+
+@pytest.mark.parametrize("bad", [
+    {"settings": [{"family": "scc_dag", "n": [80]}]},
+    {"settings": [{"family": "no_such_family", "n": [8]}]},
+    {"pipelines": ["baseline+greedy_max_delta_first"]},
+    {"pipelines": ["fastest"]},
+])
+def test_benchmark_config_validated_before_work(bad):
+    cfg = {"seed": 1, "pipelines": ["baseline"], "settings": [{"family": "dense", "n": [6]}]} | bad
+    with pytest.raises((ValueError, KeyError)):
+        validate_config(cfg)
+
+
+def test_cli_benchmark_writes_outputs_and_removes_checkpoint(tmp_path):
+    cfg = {"name": "t", "seed": 1, "trials": 1, "count": 1, "measure_memory": False,
+           "pipelines": ["scc", "baseline"], "settings": [{"family": "dense", "n": [6]}]}
+    path = tmp_path / "cfg.json"
+    path.write_text(json.dumps(cfg))
+    assert main(["benchmark", "--config", str(path), "--out", str(tmp_path / "out")]) == 0
+    names = sorted(p.name for p in (tmp_path / "out").iterdir())
+    assert names == ["t_meta.json", "t_raw.jsonl", "t_summary.csv", "t_summary.md"]
 
 
 def test_mining_smoke():

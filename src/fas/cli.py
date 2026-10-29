@@ -167,8 +167,17 @@ def cmd_benchmark(args: argparse.Namespace) -> int:
     from .benchmark import load_config, run_benchmark, write_outputs
 
     config = load_config(Path(args.config))
-    rows = run_benchmark(config)
-    paths = write_outputs(rows, Path(args.out), config)
+    out = Path(args.out)
+    out.mkdir(parents=True, exist_ok=True)
+    partial = out / f"{config.get('name', 'benchmark')}_partial.jsonl"
+    with partial.open("w") as fh:
+        def checkpoint(batch: list[dict]) -> None:
+            fh.writelines(json.dumps(r) + "\n" for r in batch)
+            fh.flush()
+
+        rows = run_benchmark(config, progress=lambda s: print(s, flush=True), on_rows=checkpoint)
+    paths = write_outputs(rows, out, config)
+    partial.unlink()
     print("wrote " + ", ".join(str(p) for p in paths))
     return 0
 

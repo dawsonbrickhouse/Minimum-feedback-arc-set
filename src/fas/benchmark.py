@@ -148,7 +148,10 @@ def _measure(g: Graph, pipeline: str, cfg: dict[str, Any]) -> dict[str, Any]:
     return row
 
 
-def run_benchmark(cfg: dict[str, Any], progress: Callable[[str], None] | None = print) -> list[dict[str, Any]]:
+def run_benchmark(cfg: dict[str, Any], progress: Callable[[str], None] | None = print,
+                  on_rows: Callable[[list[dict[str, Any]]], None] | None = None) -> list[dict[str, Any]]:
+    """Run every (family, n, instance, pipeline); ``on_rows`` receives each instance's rows as a checkpoint."""
+    validate_config(cfg)
     rows: list[dict[str, Any]] = []
     for setting in cfg["settings"]:
         family, count = setting["family"], setting.get("count", cfg.get("count", 5))
@@ -156,9 +159,12 @@ def run_benchmark(cfg: dict[str, Any], progress: Callable[[str], None] | None = 
             for idx, g in enumerate(random_family(family, n, count, seed=cfg["seed"])):
                 per_pipeline = {p: _measure(g, p, cfg) for p in cfg["pipelines"]}
                 opts = {r["opt"] for r in per_pipeline.values() if r["completed"]}
-                for pipeline, r in per_pipeline.items():
-                    rows.append({"family": family, "n": n, "instance": idx, "seed": cfg["seed"], "graph_n": g.n,
-                                 "graph_m": g.m, "pipeline": pipeline, "opt_agree": len(opts) <= 1, **r})
+                batch = [{"family": family, "n": n, "instance": idx, "seed": cfg["seed"], "graph_n": g.n,
+                          "graph_m": g.m, "pipeline": pipeline, "opt_agree": len(opts) <= 1, **r}
+                         for pipeline, r in per_pipeline.items()]
+                rows.extend(batch)
+                if on_rows:
+                    on_rows(batch)
                 if progress:
                     progress(f"{family} n={n} #{idx}: " + ", ".join(
                         f"{p}={r.get('seconds_median', 'skip')}" for p, r in per_pipeline.items()))
@@ -189,7 +195,24 @@ def summarize(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 
 def load_config(path: Path) -> dict[str, Any]:
-    return json.loads(path.read_text())
+    cfg = json.loads(path.read_text())
+    validate_config(cfg)
+    return cfg
+
+
+def validate_config(cfg: dict[str, Any]) -> None:
+    """Fail before any work if a family, size or pipeline is invalid (generators check limits lazily)."""
+    for setting in cfg["settings"]:
+        for n in setting["n"]:
+            for _ in random_family(setting["family"], n, 0, seed=cfg["seed"]):
+                pass
+    for pipeline in cfg["pipelines"]:
+        if pipeline.startswith("baseline+"):
+            rule = get_rule(pipeline.split("+", 1)[1])
+            if ALLOWED_STATUS not in rule.statuses:
+                raise ValueError(f"{rule.name} is not proved; benchmarks only use proved candidates")
+        elif pipeline not in ("plain", "scc", "baseline"):
+            raise ValueError(f"unknown pipeline {pipeline!r}")
 
 
 def write_outputs(rows: list[dict[str, Any]], out_dir: Path, cfg: dict[str, Any]) -> list[Path]:

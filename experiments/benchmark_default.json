@@ -3,20 +3,89 @@
  "seed": 2026,
  "trials": 3,
  "count": 5,
- "max_component": 20,
+ "max_component": 18,
  "plain_max_n": 18,
  "measure_memory": true,
  "max_applications": 200,
- "pipelines": ["plain", "scc", "baseline", "baseline+two_cycle_cancellation", "baseline+module_contraction"],
+ "pipelines": [
+  "plain",
+  "scc",
+  "baseline",
+  "baseline+two_cycle_cancellation",
+  "baseline+module_contraction"
+ ],
  "settings": [
-  {"family": "sparse", "n": [16, 30, 60]},
-  {"family": "dense", "n": [12, 14, 16]},
-  {"family": "oriented_dense", "n": [12, 14, 16]},
-  {"family": "tournament", "n": [12, 14, 16]},
-  {"family": "multigraph", "n": [12, 14, 16]},
-  {"family": "planted", "n": [14, 18, 24]},
-  {"family": "scc_dag", "n": [20, 40, 80]},
-  {"family": "repeated_triangle", "n": [15, 24, 36]},
-  {"family": "overlapping_cycles", "n": [12, 16, 18]}
+  {
+   "family": "sparse",
+   "n": [
+    16,
+    30,
+    60
+   ]
+  },
+  {
+   "family": "dense",
+   "n": [
+    12,
+    14,
+    16
+   ]
+  },
+  {
+   "family": "oriented_dense",
+   "n": [
+    12,
+    14,
+    16
+   ]
+  },
+  {
+   "family": "tournament",
+   "n": [
+    12,
+    14,
+    16
+   ]
+  },
+  {
+   "family": "multigraph",
+   "n": [
+    12,
+    14,
+    16
+   ]
+  },
+  {
+   "family": "planted",
+   "n": [
+    14,
+    18,
+    24
+   ]
+  },
+  {
+   "family": "scc_dag",
+   "n": [
+    20,
+    40,
+    60
+   ]
+  },
+  {
+   "family": "repeated_triangle",
+   "n": [
+    15,
+    24,
+    36
+   ]
+  },
+  {
+   "family": "overlapping_cycles",
+   "n": [
+    12,
+    16,
+    18
+   ]
+  }
  ]
 }
