@@ -14,9 +14,14 @@ Rules (applied to a fixpoint, in this order):
 * ``degree_two_bypass`` a vertex ``v`` whose only in-neighbour is ``u`` (weight a)
                         and only out-neighbour is ``w`` (weight b), ``u, w != v``,
                         is replaced by ``min(a, b)`` extra copies of ``(u, w)``.
+* ``pendant_two_cycle`` Baharev et al. 2021, Fig. 4(2,3): a vertex ``b`` on a 2-cycle
+                        with ``a`` whose only out-arc is ``(b, a)`` with
+                        ``w(b,a) <= w(a,b)`` (or only in-arc ``(a, b)`` with
+                        ``w(a,b) <= w(b,a)``) is deleted, paying that arc.
 
-After the fixpoint the kernel is split into its strongly connected components,
-which are solved independently (OPT is additive over SCCs).
+After the fixpoint the kernel is split into its strongly connected components
+and, optionally, each component into its biconnected blocks; the pieces are
+solved independently (OPT is additive over SCCs and over blocks).
 """
 
 from __future__ import annotations
@@ -26,13 +31,14 @@ from collections.abc import Iterable
 from dataclasses import dataclass, field
 
 from .exact_solver import FASResult, Method, solve_exact
-from .graph import Arc, Graph, strongly_connected_components, topological_order
+from .graph import Arc, Graph, biconnected_blocks, strongly_connected_components, topological_order
 
 SELF_LOOP = "self_loop"
 SOURCE_SINK = "source_sink"
 INTER_SCC = "inter_scc_arcs"
 BYPASS = "degree_two_bypass"
-BASELINE_RULES: tuple[str, ...] = (SELF_LOOP, SOURCE_SINK, INTER_SCC, BYPASS)
+PENDANT_TWO_CYCLE = "pendant_two_cycle"
+BASELINE_RULES: tuple[str, ...] = (SELF_LOOP, SOURCE_SINK, INTER_SCC, BYPASS, PENDANT_TWO_CYCLE)
 
 RemovedSet = frozenset[Arc]
 
@@ -104,6 +110,18 @@ class BypassStep(ReductionStep):
     def describe(self) -> str:
         return (f"bypassed {self.v}: {self.u}->{self.v} (x{self.a}), {self.v}->{self.w} (x{self.b}) "
                 f"replaced by {min(self.a, self.b)} extra copies of {self.u}->{self.w}")
+
+
+@dataclass(frozen=True)
+class PendantTwoCycleStep(ReductionStep):
+    vertex: int = -1
+    paid_arc: Arc = (-1, -1)
+
+    def lift(self, removed: RemovedSet) -> RemovedSet:
+        return removed | {self.paid_arc}
+
+    def describe(self) -> str:
+        return f"deleted {self.vertex} on a pendant 2-cycle, paying arc {self.paid_arc} (weight {self.offset})"
 
 
 # ---------------------------------------------------------------------- mutable work graph
@@ -187,11 +205,34 @@ def _bypass_degree_two(wg: _WorkGraph) -> list[ReductionStep]:
     return steps
 
 
+def _pendant_two_cycles(wg: _WorkGraph) -> list[ReductionStep]:
+    steps: list[ReductionStep] = []
+    for b in sorted(wg.out):
+        if b not in wg.out or b in wg.out[b]:
+            continue
+        paid: Arc | None = None
+        if len(wg.out[b]) == 1:
+            (a, w_ba), = wg.out[b].items()
+            if wg.inn[b].get(a, 0) >= w_ba:
+                paid = (b, a)
+        if paid is None and len(wg.inn[b]) == 1:
+            (a, w_ab), = wg.inn[b].items()
+            if wg.out[b].get(a, 0) >= w_ab:
+                paid = (a, b)
+        if paid is None:
+            continue
+        weight = wg.out[paid[0]][paid[1]]
+        wg.remove_vertex(b)
+        steps.append(PendantTwoCycleStep(PENDANT_TWO_CYCLE, weight, b, paid))
+    return steps
+
+
 _RULE_FUNCS = {
     SELF_LOOP: _remove_self_loops,
     SOURCE_SINK: _remove_sources_sinks,
     INTER_SCC: _remove_inter_scc_arcs,
     BYPASS: _bypass_degree_two,
+    PENDANT_TWO_CYCLE: _pendant_two_cycles,
 }
 
 
@@ -217,6 +258,18 @@ class ReductionResult:
                 comps.append(sub)
         return comps
 
+    def pieces(self, split_blocks: bool = True) -> list[Graph]:
+        """Independent subproblems: kernel SCCs, further split into biconnected blocks."""
+        if not split_blocks:
+            return self.components()
+        out = []
+        for comp in self.components():
+            for block in biconnected_blocks(comp):
+                sub = comp.induced_subgraph(block)
+                if sub.num_arc_pairs:
+                    out.append(sub)
+        return out
+
     def rule_counts(self) -> dict[str, int]:
         return dict(Counter(s.rule for s in self.steps))
 
@@ -235,6 +288,7 @@ class ReductionResult:
             "offset": self.offset,
             "rule_counts": self.rule_counts(),
             "component_sizes": sorted((c.n for c in self.components()), reverse=True),
+            "block_sizes": sorted((b.n for b in self.pieces()), reverse=True),
         }
 
 
@@ -268,11 +322,12 @@ def solve_with_reductions(
     rules: Iterable[str] = BASELINE_RULES,
     method: Method = "dp",
     max_component_size: int | None = None,
+    split_blocks: bool = True,
 ) -> tuple[FASResult, ReductionResult]:
-    """Reduce, solve each kernel SCC exactly, and lift back to an optimal FAS of ``g``."""
+    """Reduce, solve each kernel SCC (or block) exactly, and lift back to an optimal FAS of ``g``."""
     red = reduce_graph(g, rules)
     kernel_removed: set[Arc] = set()
-    for comp in red.components():
+    for comp in red.pieces(split_blocks):
         kernel_removed |= solve_exact(comp, method=method, max_component_size=max_component_size).removed_arcs
     removed = red.lift(kernel_removed)
     ordering = ordering_from_removed(g, removed)

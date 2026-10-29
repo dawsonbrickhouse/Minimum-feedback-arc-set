@@ -98,3 +98,21 @@ def test_summary_fields():
     g = Graph.from_arcs([(0, 1), (1, 2), (2, 0), (2, 3), (3, 3)])
     s = reduce_graph(g).summary()
     assert s["n_before"] == 4 and s["offset"] == 2 and s["n_after"] == 0
+
+
+def test_block_split_is_additive_exhaustive_n5():
+    from fas.graph import biconnected_blocks
+
+    for g in isomorphism_classes(5, "digraph"):
+        total = sum(solve_dp(g.induced_subgraph(b)).cost for b in biconnected_blocks(g))
+        assert total == solve_dp(g).cost, g
+
+
+def test_pendant_two_cycle_rule():
+    from fas.reductions import PENDANT_TWO_CYCLE
+
+    # b=3 has only out-arc 3->0 (x1) and 0->3 (x2): delete 3 paying (3,0)
+    g = Graph.from_arcs([(0, 1), (1, 2), (2, 0), (0, 3, 2), (3, 0)])
+    red = reduce_graph(g, (PENDANT_TWO_CYCLE,))
+    assert red.offset == 1 and not red.kernel.has_vertex(3)
+    _check(g, (PENDANT_TWO_CYCLE,))

@@ -400,6 +400,60 @@ def weakly_connected_components(g: Graph) -> list[tuple[int, ...]]:
     return comps
 
 
+def biconnected_blocks(g: Graph) -> list[tuple[int, ...]]:
+    """Vertex sets of the blocks (maximal 2-connected pieces and bridges) of the
+    underlying undirected simple graph; self-loops and direction are ignored and
+    isolated vertices form no block. Iterative Hopcroft-Tarjan."""
+    adj: dict[int, set[int]] = {v: set() for v in g.vertices}
+    for (u, v), _ in g.arcs():
+        if u != v:
+            adj[u].add(v)
+            adj[v].add(u)
+    nbrs = {v: sorted(ns) for v, ns in adj.items()}
+    disc: dict[int, int] = {}
+    low: dict[int, int] = {}
+    blocks: list[tuple[int, ...]] = []
+    edge_stack: list[tuple[int, int]] = []
+    counter = 0
+    for root in g.vertices:
+        if root in disc or not nbrs[root]:
+            continue
+        disc[root] = low[root] = counter
+        counter += 1
+        work: list[tuple[int, int | None, Iterator[int]]] = [(root, None, iter(nbrs[root]))]
+        while work:
+            v, parent, it = work[-1]
+            advanced = False
+            for w in it:
+                if w == parent:
+                    continue
+                if w not in disc:
+                    disc[w] = low[w] = counter
+                    counter += 1
+                    edge_stack.append((v, w))
+                    work.append((w, v, iter(nbrs[w])))
+                    advanced = True
+                    break
+                if disc[w] < disc[v]:
+                    edge_stack.append((v, w))
+                    low[v] = min(low[v], disc[w])
+            if advanced:
+                continue
+            work.pop()
+            if parent is None:
+                continue
+            low[parent] = min(low[parent], low[v])
+            if low[v] >= disc[parent]:
+                block: set[int] = set()
+                while True:
+                    a, b = edge_stack.pop()
+                    block.update((a, b))
+                    if (a, b) == (parent, v):
+                        break
+                blocks.append(tuple(sorted(block)))
+    return blocks
+
+
 def reachable(g: Graph, source: int, avoid: frozenset[int] = frozenset()) -> set[int]:
     """Vertices reachable from ``source`` by paths whose internal vertices avoid ``avoid``."""
     seen = {source}

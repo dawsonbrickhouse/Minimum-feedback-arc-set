@@ -101,3 +101,18 @@ def test_scc_order_is_topological():
         where = {v: i for i, c in enumerate(comps) for v in c}
         for (u, v), _ in g.arcs():
             assert where[u] <= where[v]
+
+
+def test_biconnected_blocks_against_networkx():
+    nx = pytest.importorskip("networkx")
+    from fas.graph import biconnected_blocks
+
+    rng = random.Random(3)
+    for _ in range(300):
+        g = random_digraph(rng.randint(0, 12), rng.random() * 0.3, rng)
+        h = nx.Graph()
+        h.add_nodes_from(g.vertices)
+        h.add_edges_from(g.arc_pairs())
+        ours = sorted(biconnected_blocks(g))
+        theirs = sorted(tuple(sorted(c)) for c in nx.biconnected_components(h))
+        assert ours == theirs
