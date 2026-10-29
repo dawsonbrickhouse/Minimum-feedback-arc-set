@@ -169,3 +169,13 @@ def test_two_terminal_separator_example():
     g = Graph.from_arcs([(0, 2), (2, 1), (1, 0), (0, 3), (3, 1)])
     cases = evaluate_graph(get_rule("two_terminal_separator"), g, Oracle())
     assert cases and all(c.outcome is Outcome.PASS for c in cases)
+
+
+@pytest.mark.parametrize("seed", range(20))
+def test_module_contraction_targeted_generator_always_matches(seed):
+    # Regression: for n > MODULE_SUBSET_LIMIT, planted modules of size >= 3 must still be found.
+    rule = get_rule("module_contraction")
+    g = rule.generate(random.Random(seed), 11)
+    assert g is not None
+    cases = evaluate_graph(rule, g, Oracle())
+    assert cases and all(c.outcome is Outcome.PASS for c in cases)

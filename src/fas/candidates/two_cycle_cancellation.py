@@ -12,7 +12,7 @@ from .base import Application, CandidateRule, Match, Oracle, Status
 class TwoCycleCancellation(CandidateRule):
     name = "two_cycle_cancellation"
     title = "Cancel the common weight of a 2-cycle"
-    statuses = (Status.PROVED_WITHIN_STATED_ASSUMPTIONS, Status.NOVELTY_UNVERIFIED)
+    statuses = (Status.PROVED_WITHIN_STATED_ASSUMPTIONS, Status.PRIOR_ART_FOUND)
     expected = "true"
     pattern = "2-cycle u <-> v with a = w(u,v), b = w(v,u), u != v"
     preconditions = "both arcs present"
@@ -24,8 +24,8 @@ class TwoCycleCancellation(CandidateRule):
         "An optimal order of G' is optimal for G, so the backward arcs of that order lift the solution."
     )
     open_questions = (
-        "The review calls this the LOP 'c_ij - c_ji' normalisation in spirit but found no source "
-        "stating it for FAS: prior art plausible, unverified."
+        "Prior art: Brandenburg & Hanauer, Univ. Passau tech. report MIP-1104 (2011), Sec. 2.1, erase both "
+        "arcs of a 2-cycle and add the one conforming to the order (unweighted case, read directly)."
     )
 
     def find_matches(self, g: Graph) -> list[Match]:

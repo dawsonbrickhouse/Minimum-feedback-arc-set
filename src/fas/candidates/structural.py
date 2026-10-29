@@ -48,13 +48,32 @@ class ModuleContraction(CandidateRule):
         "G[M] part and the G/M part. Literature review R13 ([OWN]) states the same identity."
     )
 
+    @staticmethod
+    def _closure(g: Graph, seed: frozenset[int]) -> frozenset[int]:
+        """Smallest module containing ``seed``: repeatedly add a vertex that distinguishes two members."""
+        members = set(seed)
+        changed = True
+        while changed:
+            changed = False
+            first = min(members)
+            for x in g.vertices:
+                if x in members:
+                    continue
+                w_in, w_out = g.multiplicity(x, first), g.multiplicity(first, x)
+                if any(g.multiplicity(x, m) != w_in or g.multiplicity(m, x) != w_out for m in members):
+                    members.add(x)
+                    changed = True
+        return frozenset(members)
+
     def find_matches(self, g: Graph) -> list[Match]:
+        """All modules for n <= MODULE_SUBSET_LIMIT; otherwise the module closures of all vertex pairs
+        (every module with >= 2 vertices contains the closure of any two of its members)."""
         vs = g.vertices
+        found: set[frozenset[int]] = {self._closure(g, frozenset(p)) for p in itertools.combinations(vs, 2)}
         if len(vs) <= MODULE_SUBSET_LIMIT:
-            subsets = (frozenset(c) for k in range(2, len(vs)) for c in itertools.combinations(vs, k))
-        else:
-            subsets = (frozenset(c) for c in itertools.combinations(vs, 2))
-        return [{"module": sorted(m)} for m in subsets if _module_violation(g, m) is None]
+            found |= {frozenset(c) for k in range(2, len(vs)) for c in itertools.combinations(vs, k)}
+        return [{"module": sorted(m)} for m in sorted(found, key=sorted)
+                if len(m) < len(vs) and _module_violation(g, m) is None]
 
     def check_preconditions(self, g: Graph, match: Match) -> str | None:
         members = frozenset(match.get("module", ()))
@@ -113,7 +132,7 @@ class ModuleContraction(CandidateRule):
 class TwoTerminalSeparator(CandidateRule):
     name = "two_terminal_separator"
     title = "Replace the far side of a 2-vertex separator by parallel arcs between the terminals"
-    statuses = (Status.PROVED_WITHIN_STATED_ASSUMPTIONS, Status.NOVELTY_UNVERIFIED)
+    statuses = (Status.PROVED_WITHIN_STATED_ASSUMPTIONS, Status.PRIOR_ART_FOUND)
     expected = "true"
     pattern = (
         "terminals x != y and a weakly connected component C of G - {x, y}; "
@@ -134,8 +153,9 @@ class TwoTerminalSeparator(CandidateRule):
         "has f_xy = 0, f_yx = d) gives the identity. Full proof: docs/proof_obligations.md."
     )
     open_questions = (
-        "3-terminal analogue: is the boundary cost function of a 3-terminal side always "
-        "representable by arcs among the terminals plus a constant? (see mining 'boundary')"
+        "Prior art: Nutov & Penn, J. Comb. Optim. 4(2):235-251, 2000 (doi:10.1023/A:1009802905533) compose "
+        "minimum dicycle covers across 2-vertex cuts (abstract only checked; exact gadget form unverified). "
+        "3-terminal analogue: see three_terminal_gadget."
     )
 
     def find_matches(self, g: Graph) -> list[Match]:

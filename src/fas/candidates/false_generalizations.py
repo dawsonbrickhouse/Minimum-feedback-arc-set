@@ -73,7 +73,7 @@ class ArcDisjointCycleBound(CandidateRule):
 class InDegreeOneContraction(CandidateRule):
     name = "in_degree_one_contraction"
     title = "Contract the unique in-arc of a vertex (naive FAS analogue of DFVS IN1)"
-    statuses = (Status.COUNTEREXAMPLE_FOUND, Status.PRIOR_ART_FOUND)
+    statuses = (Status.COUNTEREXAMPLE_FOUND,)
     expected = "false"
     pattern = "vertex v whose only in-arc is (u, v), multiplicity 1, u != v"
     preconditions = "no self-loop at v; in-arc pair set of v is exactly {(u, v)} with w = 1"

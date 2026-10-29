@@ -112,13 +112,21 @@ def cmd_test_candidate(args: argparse.Namespace) -> int:
         extra = f" minimized n={rec['minimized_size']['n']} m={rec['minimized_size']['m']}" if "minimized_size" in rec else ""
         print(f"{name:28s} {rec['verdict']:34s} {rec['outcome_counts']} graphs={rec['graphs_examined']} "
               f"({rec['stopped_reason']}, {rec['elapsed_seconds']}s){extra}")
-    if len(names) > 1:
-        index = Path(args.out) / "index.json"
-        index.write_text(json.dumps([{k: r[k] for k in ("rule", "verdict", "outcome_counts", "graphs_examined",
-                                                          "stopped_reason", "elapsed_seconds")}
-                                     | ({"minimized_size": r["minimized_size"]} if "minimized_size" in r else {})
-                                     for r in rows], indent=1))
+    _update_index(Path(args.out) / "index.json", rows, args.profile)
     return 0
+
+
+def _update_index(index: Path, rows: list[dict], profile: str) -> None:
+    """Merge ``rows`` into the index, replacing earlier entries for the same rule."""
+    entries = {e["rule"]: e for e in json.loads(index.read_text())} if index.exists() else {}
+    for r in rows:
+        entry = {k: r[k] for k in ("rule", "verdict", "outcome_counts", "graphs_examined",
+                                   "stopped_reason", "elapsed_seconds")}
+        entry["profile"] = profile
+        if "minimized_size" in r:
+            entry["minimized_size"] = r["minimized_size"]
+        entries[r["rule"]] = entry
+    index.write_text(json.dumps([entries[k] for k in sorted(entries)], indent=1))
 
 
 def cmd_check(args: argparse.Namespace) -> int:
