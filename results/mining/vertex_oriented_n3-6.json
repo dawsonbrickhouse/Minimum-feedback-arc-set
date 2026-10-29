@@ -1,0 +1,1438 @@
+{
+ "analysis": "vertex",
+ "kind": "oriented",
+ "n_values": [
+  3,
+  4,
+  5,
+  6
+ ],
+ "graphs": 22111,
+ "elapsed_seconds": 8.35,
+ "rows": [
+  {
+   "signature": {
+    "w_in": 1,
+    "w_out": 1,
+    "L_two_cycle": 0,
+    "nu_cycles": 0
+   },
+   "occurrences": 4696,
+   "forced_in_fraction": 0.0,
+   "forced_out_fraction": 0.0,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2
+     ],
+     "arcs": [
+      [
+       1,
+       2
+      ],
+      [
+       2,
+       0
+      ]
+     ]
+    },
+    "vertex": 2,
+    "opt": 0,
+    "delta": 0
+   },
+   "labels": {
+    "neither": 4696
+   }
+  },
+  {
+   "signature": {
+    "w_in": 1,
+    "w_out": 1,
+    "L_two_cycle": 0,
+    "nu_cycles": 1
+   },
+   "occurrences": 6526,
+   "forced_in_fraction": 0.5759,
+   "forced_out_fraction": 0.5759,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "arcs": [
+      [
+       0,
+       3
+      ],
+      [
+       1,
+       2
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       1
+      ],
+      [
+       3,
+       2
+      ]
+     ]
+    },
+    "vertex": 1,
+    "opt": 1,
+    "delta": 0
+   },
+   "labels": {
+    "in+out": 3758,
+    "neither": 2768
+   }
+  },
+  {
+   "signature": {
+    "w_in": 1,
+    "w_out": 2,
+    "L_two_cycle": 0,
+    "nu_cycles": 0
+   },
+   "occurrences": 4606,
+   "forced_in_fraction": 0.0,
+   "forced_out_fraction": 0.0,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "arcs": [
+      [
+       2,
+       3
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       3,
+       1
+      ]
+     ]
+    },
+    "vertex": 3,
+    "opt": 0,
+    "delta": 0
+   },
+   "labels": {
+    "neither": 4606
+   }
+  },
+  {
+   "signature": {
+    "w_in": 1,
+    "w_out": 2,
+    "L_two_cycle": 0,
+    "nu_cycles": 1
+   },
+   "occurrences": 11487,
+   "forced_in_fraction": 0.6815,
+   "forced_out_fraction": 0.0,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "arcs": [
+      [
+       0,
+       3
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       1
+      ],
+      [
+       3,
+       1
+      ],
+      [
+       3,
+       2
+      ]
+     ]
+    },
+    "vertex": 2,
+    "opt": 1,
+    "delta": 0
+   },
+   "labels": {
+    "in": 7828,
+    "neither": 3659
+   }
+  },
+  {
+   "signature": {
+    "w_in": 1,
+    "w_out": 3,
+    "L_two_cycle": 0,
+    "nu_cycles": 0
+   },
+   "occurrences": 2468,
+   "forced_in_fraction": 0.0,
+   "forced_out_fraction": 0.0,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "arcs": [
+      [
+       3,
+       4
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       4,
+       1
+      ],
+      [
+       4,
+       2
+      ]
+     ]
+    },
+    "vertex": 4,
+    "opt": 0,
+    "delta": 0
+   },
+   "labels": {
+    "neither": 2468
+   }
+  },
+  {
+   "signature": {
+    "w_in": 1,
+    "w_out": 3,
+    "L_two_cycle": 0,
+    "nu_cycles": 1
+   },
+   "occurrences": 8103,
+   "forced_in_fraction": 0.7527,
+   "forced_out_fraction": 0.0,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "arcs": [
+      [
+       1,
+       4
+      ],
+      [
+       2,
+       1
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       3,
+       1
+      ],
+      [
+       3,
+       2
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       4,
+       2
+      ],
+      [
+       4,
+       3
+      ]
+     ]
+    },
+    "vertex": 3,
+    "opt": 1,
+    "delta": 0
+   },
+   "labels": {
+    "in": 6099,
+    "neither": 2004
+   }
+  },
+  {
+   "signature": {
+    "w_in": 1,
+    "w_out": 4,
+    "L_two_cycle": 0,
+    "nu_cycles": 0
+   },
+   "occurrences": 558,
+   "forced_in_fraction": 0.0,
+   "forced_out_fraction": 0.0,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "arcs": [
+      [
+       4,
+       5
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       5,
+       1
+      ],
+      [
+       5,
+       2
+      ],
+      [
+       5,
+       3
+      ]
+     ]
+    },
+    "vertex": 5,
+    "opt": 0,
+    "delta": 0
+   },
+   "labels": {
+    "neither": 558
+   }
+  },
+  {
+   "signature": {
+    "w_in": 1,
+    "w_out": 4,
+    "L_two_cycle": 0,
+    "nu_cycles": 1
+   },
+   "occurrences": 2138,
+   "forced_in_fraction": 0.8036,
+   "forced_out_fraction": 0.0,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "arcs": [
+      [
+       2,
+       5
+      ],
+      [
+       3,
+       2
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       4,
+       1
+      ],
+      [
+       4,
+       2
+      ],
+      [
+       4,
+       3
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       5,
+       1
+      ],
+      [
+       5,
+       3
+      ],
+      [
+       5,
+       4
+      ]
+     ]
+    },
+    "vertex": 4,
+    "opt": 1,
+    "delta": 0
+   },
+   "labels": {
+    "in": 1718,
+    "neither": 420
+   }
+  },
+  {
+   "signature": {
+    "w_in": 2,
+    "w_out": 1,
+    "L_two_cycle": 0,
+    "nu_cycles": 0
+   },
+   "occurrences": 4606,
+   "forced_in_fraction": 0.0,
+   "forced_out_fraction": 0.0,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "arcs": [
+      [
+       1,
+       3
+      ],
+      [
+       2,
+       3
+      ],
+      [
+       3,
+       0
+      ]
+     ]
+    },
+    "vertex": 3,
+    "opt": 0,
+    "delta": 0
+   },
+   "labels": {
+    "neither": 4606
+   }
+  },
+  {
+   "signature": {
+    "w_in": 2,
+    "w_out": 1,
+    "L_two_cycle": 0,
+    "nu_cycles": 1
+   },
+   "occurrences": 11487,
+   "forced_in_fraction": 0.0,
+   "forced_out_fraction": 0.6815,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "arcs": [
+      [
+       0,
+       3
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       1
+      ],
+      [
+       3,
+       1
+      ],
+      [
+       3,
+       2
+      ]
+     ]
+    },
+    "vertex": 1,
+    "opt": 1,
+    "delta": 0
+   },
+   "labels": {
+    "out": 7828,
+    "neither": 3659
+   }
+  },
+  {
+   "signature": {
+    "w_in": 2,
+    "w_out": 2,
+    "L_two_cycle": 0,
+    "nu_cycles": 0
+   },
+   "occurrences": 2242,
+   "forced_in_fraction": 0.0,
+   "forced_out_fraction": 0.0,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "arcs": [
+      [
+       2,
+       4
+      ],
+      [
+       3,
+       4
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       4,
+       1
+      ]
+     ]
+    },
+    "vertex": 4,
+    "opt": 0,
+    "delta": 0
+   },
+   "labels": {
+    "neither": 2242
+   }
+  },
+  {
+   "signature": {
+    "w_in": 2,
+    "w_out": 2,
+    "L_two_cycle": 0,
+    "nu_cycles": 1
+   },
+   "occurrences": 7584,
+   "forced_in_fraction": 0.0,
+   "forced_out_fraction": 0.0,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "arcs": [
+      [
+       1,
+       4
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       3,
+       2
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       4,
+       3
+      ]
+     ]
+    },
+    "vertex": 4,
+    "opt": 1,
+    "delta": 1
+   },
+   "labels": {
+    "neither": 7584
+   }
+  },
+  {
+   "signature": {
+    "w_in": 2,
+    "w_out": 2,
+    "L_two_cycle": 0,
+    "nu_cycles": 2
+   },
+   "occurrences": 5842,
+   "forced_in_fraction": 0.4247,
+   "forced_out_fraction": 0.4247,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "arcs": [
+      [
+       0,
+       4
+      ],
+      [
+       1,
+       4
+      ],
+      [
+       2,
+       1
+      ],
+      [
+       2,
+       3
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       3,
+       1
+      ],
+      [
+       4,
+       2
+      ],
+      [
+       4,
+       3
+      ]
+     ]
+    },
+    "vertex": 3,
+    "opt": 2,
+    "delta": 1
+   },
+   "labels": {
+    "in+out": 2481,
+    "neither": 3361
+   }
+  },
+  {
+   "signature": {
+    "w_in": 2,
+    "w_out": 3,
+    "L_two_cycle": 0,
+    "nu_cycles": 0
+   },
+   "occurrences": 499,
+   "forced_in_fraction": 0.0,
+   "forced_out_fraction": 0.0,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "arcs": [
+      [
+       3,
+       5
+      ],
+      [
+       4,
+       5
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       5,
+       1
+      ],
+      [
+       5,
+       2
+      ]
+     ]
+    },
+    "vertex": 5,
+    "opt": 0,
+    "delta": 0
+   },
+   "labels": {
+    "neither": 499
+   }
+  },
+  {
+   "signature": {
+    "w_in": 2,
+    "w_out": 3,
+    "L_two_cycle": 0,
+    "nu_cycles": 1
+   },
+   "occurrences": 2054,
+   "forced_in_fraction": 0.0,
+   "forced_out_fraction": 0.0,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "arcs": [
+      [
+       2,
+       5
+      ],
+      [
+       3,
+       5
+      ],
+      [
+       4,
+       3
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       5,
+       1
+      ],
+      [
+       5,
+       4
+      ]
+     ]
+    },
+    "vertex": 5,
+    "opt": 1,
+    "delta": 1
+   },
+   "labels": {
+    "neither": 2054
+   }
+  },
+  {
+   "signature": {
+    "w_in": 2,
+    "w_out": 3,
+    "L_two_cycle": 0,
+    "nu_cycles": 2
+   },
+   "occurrences": 2686,
+   "forced_in_fraction": 0.5343,
+   "forced_out_fraction": 0.0,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "arcs": [
+      [
+       1,
+       5
+      ],
+      [
+       2,
+       5
+      ],
+      [
+       3,
+       2
+      ],
+      [
+       3,
+       4
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       4,
+       1
+      ],
+      [
+       4,
+       2
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       5,
+       3
+      ],
+      [
+       5,
+       4
+      ]
+     ]
+    },
+    "vertex": 4,
+    "opt": 2,
+    "delta": 1
+   },
+   "labels": {
+    "in": 1435,
+    "neither": 1251
+   }
+  },
+  {
+   "signature": {
+    "w_in": 3,
+    "w_out": 1,
+    "L_two_cycle": 0,
+    "nu_cycles": 0
+   },
+   "occurrences": 2468,
+   "forced_in_fraction": 0.0,
+   "forced_out_fraction": 0.0,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "arcs": [
+      [
+       1,
+       4
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       3,
+       4
+      ],
+      [
+       4,
+       0
+      ]
+     ]
+    },
+    "vertex": 4,
+    "opt": 0,
+    "delta": 0
+   },
+   "labels": {
+    "neither": 2468
+   }
+  },
+  {
+   "signature": {
+    "w_in": 3,
+    "w_out": 1,
+    "L_two_cycle": 0,
+    "nu_cycles": 1
+   },
+   "occurrences": 8103,
+   "forced_in_fraction": 0.0,
+   "forced_out_fraction": 0.7527,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "arcs": [
+      [
+       0,
+       4
+      ],
+      [
+       1,
+       2
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       3,
+       1
+      ],
+      [
+       3,
+       2
+      ],
+      [
+       4,
+       1
+      ],
+      [
+       4,
+       2
+      ],
+      [
+       4,
+       3
+      ]
+     ]
+    },
+    "vertex": 2,
+    "opt": 1,
+    "delta": 0
+   },
+   "labels": {
+    "out": 6099,
+    "neither": 2004
+   }
+  },
+  {
+   "signature": {
+    "w_in": 3,
+    "w_out": 2,
+    "L_two_cycle": 0,
+    "nu_cycles": 0
+   },
+   "occurrences": 499,
+   "forced_in_fraction": 0.0,
+   "forced_out_fraction": 0.0,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "arcs": [
+      [
+       2,
+       5
+      ],
+      [
+       3,
+       5
+      ],
+      [
+       4,
+       5
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       5,
+       1
+      ]
+     ]
+    },
+    "vertex": 5,
+    "opt": 0,
+    "delta": 0
+   },
+   "labels": {
+    "neither": 499
+   }
+  },
+  {
+   "signature": {
+    "w_in": 3,
+    "w_out": 2,
+    "L_two_cycle": 0,
+    "nu_cycles": 1
+   },
+   "occurrences": 2054,
+   "forced_in_fraction": 0.0,
+   "forced_out_fraction": 0.0,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "arcs": [
+      [
+       1,
+       5
+      ],
+      [
+       2,
+       5
+      ],
+      [
+       3,
+       5
+      ],
+      [
+       4,
+       3
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       5,
+       4
+      ]
+     ]
+    },
+    "vertex": 5,
+    "opt": 1,
+    "delta": 1
+   },
+   "labels": {
+    "neither": 2054
+   }
+  },
+  {
+   "signature": {
+    "w_in": 3,
+    "w_out": 2,
+    "L_two_cycle": 0,
+    "nu_cycles": 2
+   },
+   "occurrences": 2686,
+   "forced_in_fraction": 0.0,
+   "forced_out_fraction": 0.5343,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "arcs": [
+      [
+       0,
+       5
+      ],
+      [
+       1,
+       5
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       3,
+       2
+      ],
+      [
+       3,
+       5
+      ],
+      [
+       4,
+       1
+      ],
+      [
+       4,
+       3
+      ],
+      [
+       5,
+       2
+      ],
+      [
+       5,
+       4
+      ]
+     ]
+    },
+    "vertex": 5,
+    "opt": 2,
+    "delta": 1
+   },
+   "labels": {
+    "out": 1435,
+    "neither": 1251
+   }
+  },
+  {
+   "signature": {
+    "w_in": 4,
+    "w_out": 1,
+    "L_two_cycle": 0,
+    "nu_cycles": 0
+   },
+   "occurrences": 558,
+   "forced_in_fraction": 0.0,
+   "forced_out_fraction": 0.0,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "arcs": [
+      [
+       1,
+       5
+      ],
+      [
+       2,
+       5
+      ],
+      [
+       3,
+       5
+      ],
+      [
+       4,
+       5
+      ],
+      [
+       5,
+       0
+      ]
+     ]
+    },
+    "vertex": 5,
+    "opt": 0,
+    "delta": 0
+   },
+   "labels": {
+    "neither": 558
+   }
+  },
+  {
+   "signature": {
+    "w_in": 4,
+    "w_out": 1,
+    "L_two_cycle": 0,
+    "nu_cycles": 1
+   },
+   "occurrences": 2138,
+   "forced_in_fraction": 0.0,
+   "forced_out_fraction": 0.8036,
+   "always_forced_in": false,
+   "always_forced_out": false,
+   "explained_by_two_cycle_bound": {
+    "in": false,
+    "out": false
+   },
+   "unexplained_always_forced": false,
+   "first_neither_example": {
+    "graph": {
+     "vertices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "arcs": [
+      [
+       0,
+       5
+      ],
+      [
+       1,
+       3
+      ],
+      [
+       2,
+       3
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       4,
+       1
+      ],
+      [
+       4,
+       2
+      ],
+      [
+       4,
+       3
+      ],
+      [
+       5,
+       1
+      ],
+      [
+       5,
+       2
+      ],
+      [
+       5,
+       3
+      ],
+      [
+       5,
+       4
+      ]
+     ]
+    },
+    "vertex": 3,
+    "opt": 1,
+    "delta": 0
+   },
+   "labels": {
+    "out": 1718,
+    "neither": 420
+   }
+  }
+ ]
+}

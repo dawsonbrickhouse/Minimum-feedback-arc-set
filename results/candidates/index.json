@@ -1,0 +1,138 @@
+[
+ {
+  "rule": "arc_disjoint_cycle_bound",
+  "verdict": "COUNTEREXAMPLE_FOUND",
+  "outcome_counts": {
+   "pass": 34,
+   "counterexample": 2
+  },
+  "graphs_examined": 18,
+  "stopped_reason": "first counterexample",
+  "elapsed_seconds": 0.002,
+  "profile": "standard",
+  "minimized_size": {
+   "n": 3,
+   "m": 4
+  }
+ },
+ {
+  "rule": "arc_domination",
+  "verdict": "NO_COUNTEREXAMPLE_IN_SEARCH_SPACE",
+  "outcome_counts": {
+   "pass": 58672
+  },
+  "graphs_examined": 10596,
+  "stopped_reason": "exhausted all sources",
+  "elapsed_seconds": 14.658,
+  "profile": "standard"
+ },
+ {
+  "rule": "greedy_max_delta_first",
+  "verdict": "COUNTEREXAMPLE_FOUND",
+  "outcome_counts": {
+   "pass": 56,
+   "counterexample": 1
+  },
+  "graphs_examined": 61,
+  "stopped_reason": "first counterexample",
+  "elapsed_seconds": 0.003,
+  "profile": "standard",
+  "minimized_size": {
+   "n": 4,
+   "m": 5
+  }
+ },
+ {
+  "rule": "in_degree_one_contraction",
+  "verdict": "COUNTEREXAMPLE_FOUND",
+  "outcome_counts": {
+   "pass": 24,
+   "counterexample": 1
+  },
+  "graphs_examined": 18,
+  "stopped_reason": "first counterexample",
+  "elapsed_seconds": 0.001,
+  "profile": "standard",
+  "minimized_size": {
+   "n": 3,
+   "m": 4
+  }
+ },
+ {
+  "rule": "in_degree_one_exchange",
+  "verdict": "NO_COUNTEREXAMPLE_IN_SEARCH_SPACE",
+  "outcome_counts": {
+   "pass": 24968
+  },
+  "graphs_examined": 10596,
+  "stopped_reason": "exhausted all sources",
+  "elapsed_seconds": 2.301,
+  "profile": "standard"
+ },
+ {
+  "rule": "module_contraction",
+  "verdict": "NO_COUNTEREXAMPLE_IN_SEARCH_SPACE",
+  "outcome_counts": {
+   "pass": 4935
+  },
+  "graphs_examined": 10896,
+  "stopped_reason": "exhausted all sources",
+  "elapsed_seconds": 1.499,
+  "profile": "standard"
+ },
+ {
+  "rule": "neighborhood_dominance",
+  "verdict": "NO_COUNTEREXAMPLE_IN_SEARCH_SPACE",
+  "outcome_counts": {
+   "pass": 20827
+  },
+  "graphs_examined": 10596,
+  "stopped_reason": "exhausted all sources",
+  "elapsed_seconds": 1.921,
+  "profile": "standard"
+ },
+ {
+  "rule": "three_terminal_gadget",
+  "verdict": "NO_COUNTEREXAMPLE_IN_SEARCH_SPACE",
+  "outcome_counts": {
+   "pass": 168901
+  },
+  "graphs_examined": 10896,
+  "stopped_reason": "exhausted all sources",
+  "elapsed_seconds": 71.201,
+  "profile": "standard"
+ },
+ {
+  "rule": "two_cycle_cancellation",
+  "verdict": "NO_COUNTEREXAMPLE_IN_SEARCH_SPACE",
+  "outcome_counts": {
+   "pass": 27440
+  },
+  "graphs_examined": 10896,
+  "stopped_reason": "exhausted all sources",
+  "elapsed_seconds": 2.956,
+  "profile": "standard"
+ },
+ {
+  "rule": "two_cycle_local_bound",
+  "verdict": "NO_COUNTEREXAMPLE_IN_SEARCH_SPACE",
+  "outcome_counts": {
+   "pass": 27695
+  },
+  "graphs_examined": 10896,
+  "stopped_reason": "exhausted all sources",
+  "elapsed_seconds": 1.587,
+  "profile": "standard"
+ },
+ {
+  "rule": "two_terminal_separator",
+  "verdict": "NO_COUNTEREXAMPLE_IN_SEARCH_SPACE",
+  "outcome_counts": {
+   "pass": 145020
+  },
+  "graphs_examined": 10896,
+  "stopped_reason": "exhausted all sources",
+  "elapsed_seconds": 25.335,
+  "profile": "standard"
+ }
+]
