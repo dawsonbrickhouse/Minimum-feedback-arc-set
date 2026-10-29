@@ -1,0 +1,27 @@
+{
+ "orders": 24,
+ "pairwise_rank": 7,
+ "one_internal_sides": 256,
+ "rank_with_one_internal": 20,
+ "two_internal_samples": 2000,
+ "seed": 0,
+ "rank_trace_with_two_internal": [
+  {
+   "samples": 500,
+   "rank": 23
+  },
+  {
+   "samples": 1000,
+   "rank": 24
+  },
+  {
+   "samples": 1500,
+   "rank": 24
+  },
+  {
+   "samples": 2000,
+   "rank": 24
+  }
+ ],
+ "full_rank": 24
+}

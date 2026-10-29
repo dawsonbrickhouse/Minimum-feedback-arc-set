@@ -1,0 +1,9 @@
+{
+ "rule": "three_terminal_gadget",
+ "partial": true,
+ "graphs_examined": 14000,
+ "outcome_counts": {
+  "pass": 241601
+ },
+ "elapsed_seconds": 56.668
+}

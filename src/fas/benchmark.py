@@ -188,8 +188,8 @@ def summarize(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "max_largest_piece": max((r["largest_piece"] for r in done), default=None),
             "median_peak_kib": (round(statistics.median(r["peak_python_alloc_kib"] for r in done), 1)
                                 if done and "peak_python_alloc_kib" in done[0] else None),
-            "all_valid": all(r["solution_valid"] for r in done),
-            "all_agree": all(r["opt_agree"] for r in rs),
+            "all_valid": all(r["solution_valid"] for r in done) if done else None,
+            "all_agree": all(r["opt_agree"] for r in done) if done else None,
         })
     return out
 

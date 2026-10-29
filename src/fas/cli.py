@@ -89,6 +89,8 @@ def _run_one(name: str, args: argparse.Namespace) -> dict:
     cfg = replace(PROFILES[args.profile], seed=args.seed)
     if args.max_seconds is not None:
         cfg = replace(cfg, max_seconds=args.max_seconds)
+    if args.max_matches is not None:
+        cfg = replace(cfg, max_matches_per_graph=args.max_matches)
     out_dir = Path(args.out) / name
     summary = run_search(rule, cfg, checkpoint=out_dir / "summary.json")
     record = summary.to_dict()
@@ -221,6 +223,8 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--profile", choices=sorted(PROFILES), default="standard")
     s.add_argument("--seed", type=int, default=0)
     s.add_argument("--max-seconds", type=float, default=None)
+    s.add_argument("--max-matches", type=int, default=None,
+                   help="matches evaluated per graph (default 64); the rest are reported as matches_skipped")
     s.add_argument("--no-minimize", action="store_true")
     s.add_argument("--out", default="results/candidates")
     s.set_defaults(func=cmd_test_candidate)

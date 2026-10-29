@@ -1,0 +1,11 @@
+arc_disjoint_cycle_bound     COUNTEREXAMPLE_FOUND               {'pass': 34, 'counterexample': 2} graphs=18 (first counterexample, 0.002s) minimized n=3 m=4
+arc_domination               NO_COUNTEREXAMPLE_IN_SEARCH_SPACE  {'pass': 58672} graphs=10596 (exhausted all sources, 14.658s)
+greedy_max_delta_first       COUNTEREXAMPLE_FOUND               {'pass': 56, 'counterexample': 1} graphs=61 (first counterexample, 0.003s) minimized n=4 m=5
+in_degree_one_contraction    COUNTEREXAMPLE_FOUND               {'pass': 24, 'counterexample': 1} graphs=18 (first counterexample, 0.001s) minimized n=3 m=4
+in_degree_one_exchange       NO_COUNTEREXAMPLE_IN_SEARCH_SPACE  {'pass': 24968} graphs=10596 (exhausted all sources, 2.301s)
+module_contraction           NO_COUNTEREXAMPLE_IN_SEARCH_SPACE  {'pass': 4935} graphs=10896 (exhausted all sources, 1.499s)
+neighborhood_dominance       NO_COUNTEREXAMPLE_IN_SEARCH_SPACE  {'pass': 20827} graphs=10596 (exhausted all sources, 1.921s)
+three_terminal_gadget        NO_COUNTEREXAMPLE_IN_SEARCH_SPACE  {'pass': 168901} graphs=10896 (exhausted all sources, 71.201s)
+two_cycle_cancellation       NO_COUNTEREXAMPLE_IN_SEARCH_SPACE  {'pass': 27440} graphs=10896 (exhausted all sources, 2.956s)
+two_cycle_local_bound        NO_COUNTEREXAMPLE_IN_SEARCH_SPACE  {'pass': 27695} graphs=10896 (exhausted all sources, 1.587s)
+two_terminal_separator       NO_COUNTEREXAMPLE_IN_SEARCH_SPACE  {'pass': 145020} graphs=10896 (exhausted all sources, 25.335s)

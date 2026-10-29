@@ -1,0 +1,114 @@
+{
+ "rule": "arc_disjoint_cycle_bound",
+ "claimed_identity": "OPT(G) = OPT(G - v) + w_in(v)   (resp. w_out(v))",
+ "original_graph": {
+  "vertices": [
+   0,
+   1,
+   2
+  ],
+  "arcs": [
+   [
+    0,
+    1
+   ],
+   [
+    1,
+    2
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    1
+   ]
+  ]
+ },
+ "minimized_graph": {
+  "vertices": [
+   0,
+   1,
+   2
+  ],
+  "arcs": [
+   [
+    0,
+    1
+   ],
+   [
+    1,
+    2
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    2,
+    1
+   ]
+  ]
+ },
+ "match": {
+  "vertex": 0,
+  "side": "in"
+ },
+ "reduced_graph": {
+  "vertices": [
+   1,
+   2
+  ],
+  "arcs": [
+   [
+    1,
+    2
+   ],
+   [
+    2,
+    1
+   ]
+  ]
+ },
+ "opt_original": 1,
+ "opt_reduced": 1,
+ "claimed_correction": 1,
+ "discrepancy": -1,
+ "failure_kind": "identity",
+ "witness_optimal_solution_original": {
+  "cost": 1,
+  "ordering": [
+   2,
+   0,
+   1
+  ],
+  "removed_arcs": [
+   [
+    1,
+    2
+   ]
+  ],
+  "method": "dp+scc"
+ },
+ "witness_optimal_solution_reduced": {
+  "cost": 1,
+  "ordering": [
+   2,
+   1
+  ],
+  "removed_arcs": [
+   [
+    1,
+    2
+   ]
+  ],
+  "method": "dp+scc"
+ },
+ "preconditions_explanation": "w_in(0) = 1 <= nu(0) = 1",
+ "replay_outcome": "counterexample",
+ "minimization_steps": [
+  "relabel {0: 0, 1: 1, 2: 2}"
+ ],
+ "minimization_attempts": 7
+}

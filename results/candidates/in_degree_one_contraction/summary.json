@@ -1,0 +1,171 @@
+{
+ "rule": "in_degree_one_contraction",
+ "config": {
+  "exhaustive": [
+   [
+    "digraph",
+    1
+   ],
+   [
+    "digraph",
+    2
+   ],
+   [
+    "digraph",
+    3
+   ],
+   [
+    "digraph",
+    4
+   ],
+   [
+    "digraph",
+    5
+   ]
+  ],
+  "random_families": [
+   [
+    "sparse",
+    8,
+    150
+   ],
+   [
+    "dense",
+    7,
+    150
+   ],
+   [
+    "multigraph",
+    6,
+    150
+   ],
+   [
+    "planted",
+    9,
+    100
+   ],
+   [
+    "scc_dag",
+    10,
+    60
+   ],
+   [
+    "overlapping_cycles",
+    8,
+    40
+   ],
+   [
+    "tournament",
+    7,
+    100
+   ]
+  ],
+  "targeted": [
+   [
+    6,
+    200
+   ],
+   [
+    9,
+    100
+   ]
+  ],
+  "seed": 0,
+  "max_seconds": 300.0,
+  "max_graphs": 200000,
+  "max_component_size": 14,
+  "stop_at_first_counterexample": true,
+  "max_matches_per_graph": 64
+ },
+ "outcome_counts": {
+  "pass": 24,
+  "counterexample": 1
+ },
+ "graphs_examined": 18,
+ "graphs_with_matches": 14,
+ "per_source": {
+  "exhaustive:digraph:n=1": {
+   "graphs": 1
+  },
+  "exhaustive:digraph:n=2": {
+   "graphs": 3,
+   "pass": 3
+  },
+  "exhaustive:digraph:n=3": {
+   "graphs": 14,
+   "pass": 21,
+   "counterexample": 1
+  }
+ },
+ "elapsed_seconds": 0.001,
+ "stopped_reason": "first counterexample",
+ "matches_skipped": 0,
+ "first_counterexample": {
+  "source": "exhaustive:digraph:n=3",
+  "rule": "in_degree_one_contraction",
+  "outcome": "counterexample",
+  "graph": {
+   "vertices": [
+    0,
+    1,
+    2
+   ],
+   "arcs": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ]
+   ]
+  },
+  "match": {
+   "u": 1,
+   "v": 2
+  },
+  "opt_original": 1,
+  "opt_reduced": 2,
+  "correction": 0,
+  "discrepancy": -1,
+  "reduced": {
+   "vertices": [
+    0,
+    1
+   ],
+   "arcs": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ]
+   ]
+  },
+  "failure_kind": "identity",
+  "message": "OPT(G)=1 but OPT(G')+correction=2+0=2"
+ },
+ "first_inconclusive": null,
+ "first_invalid": null,
+ "verdict": "COUNTEREXAMPLE_FOUND",
+ "minimized_counterexample": "results/candidates/in_degree_one_contraction/in_degree_one_contraction.json",
+ "minimized_size": {
+  "n": 3,
+  "m": 4
+ }
+}
