@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fas-platform"
+version = "0.1.0"
+description = "Exact solvers, verified reductions and a candidate-rule test harness for Minimum Feedback Arc Set"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest==8.3.3", "networkx==3.4.2"]
+
+[project.scripts]
+fas = "fas.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+markers = ["slow: longer exhaustive searches (deselect with -m 'not slow')"]

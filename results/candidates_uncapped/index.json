@@ -1,0 +1,24 @@
+[
+ {
+  "rule": "three_terminal_gadget",
+  "verdict": "NO_COUNTEREXAMPLE_IN_SEARCH_SPACE",
+  "outcome_counts": {
+   "pass": 187480
+  },
+  "graphs_examined": 10896,
+  "stopped_reason": "exhausted all sources",
+  "elapsed_seconds": 94.721,
+  "profile": "standard"
+ },
+ {
+  "rule": "two_terminal_separator",
+  "verdict": "NO_COUNTEREXAMPLE_IN_SEARCH_SPACE",
+  "outcome_counts": {
+   "pass": 145212
+  },
+  "graphs_examined": 10896,
+  "stopped_reason": "exhausted all sources",
+  "elapsed_seconds": 27.967,
+  "profile": "standard"
+ }
+]

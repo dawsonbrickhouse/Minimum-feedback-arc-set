@@ -1,0 +1,90 @@
+[
+ {
+  "rule": "arc_domination",
+  "verdict": "NO_COUNTEREXAMPLE_IN_SEARCH_SPACE",
+  "outcome_counts": {
+   "pass": 237404
+  },
+  "graphs_examined": 33482,
+  "stopped_reason": "exhausted all sources",
+  "elapsed_seconds": 51.106,
+  "profile": "deep"
+ },
+ {
+  "rule": "in_degree_one_exchange",
+  "verdict": "NO_COUNTEREXAMPLE_IN_SEARCH_SPACE",
+  "outcome_counts": {
+   "pass": 107831
+  },
+  "graphs_examined": 33482,
+  "stopped_reason": "exhausted all sources",
+  "elapsed_seconds": 14.505,
+  "profile": "deep"
+ },
+ {
+  "rule": "module_contraction",
+  "verdict": "NO_COUNTEREXAMPLE_IN_SEARCH_SPACE",
+  "outcome_counts": {
+   "pass": 15437
+  },
+  "graphs_examined": 34082,
+  "stopped_reason": "exhausted all sources",
+  "elapsed_seconds": 10.717,
+  "profile": "deep"
+ },
+ {
+  "rule": "neighborhood_dominance",
+  "verdict": "NO_COUNTEREXAMPLE_IN_SEARCH_SPACE",
+  "outcome_counts": {
+   "pass": 116298
+  },
+  "graphs_examined": 33482,
+  "stopped_reason": "exhausted all sources",
+  "elapsed_seconds": 14.086,
+  "profile": "deep"
+ },
+ {
+  "rule": "three_terminal_gadget",
+  "verdict": "NO_COUNTEREXAMPLE_IN_SEARCH_SPACE",
+  "outcome_counts": {
+   "pass": 824961
+  },
+  "graphs_examined": 34082,
+  "stopped_reason": "exhausted all sources",
+  "elapsed_seconds": 469.655,
+  "profile": "deep"
+ },
+ {
+  "rule": "two_cycle_cancellation",
+  "verdict": "NO_COUNTEREXAMPLE_IN_SEARCH_SPACE",
+  "outcome_counts": {
+   "pass": 31702
+  },
+  "graphs_examined": 34082,
+  "stopped_reason": "exhausted all sources",
+  "elapsed_seconds": 9.533,
+  "profile": "deep"
+ },
+ {
+  "rule": "two_cycle_local_bound",
+  "verdict": "NO_COUNTEREXAMPLE_IN_SEARCH_SPACE",
+  "outcome_counts": {
+   "pass": 29571
+  },
+  "graphs_examined": 34082,
+  "stopped_reason": "exhausted all sources",
+  "elapsed_seconds": 6.514,
+  "profile": "deep"
+ },
+ {
+  "rule": "two_terminal_separator",
+  "verdict": "NO_COUNTEREXAMPLE_IN_SEARCH_SPACE",
+  "outcome_counts": {
+   "pass": 583160
+  },
+  "graphs_examined": 34082,
+  "stopped_reason": "exhausted all sources",
+  "elapsed_seconds": 133.668,
+  "profile": "deep"
+ }
+]

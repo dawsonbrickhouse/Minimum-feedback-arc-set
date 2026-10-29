@@ -1,0 +1,172 @@
+{
+ "rule": "three_terminal_gadget",
+ "config": {
+  "exhaustive": [
+   [
+    "digraph",
+    1
+   ],
+   [
+    "digraph",
+    2
+   ],
+   [
+    "digraph",
+    3
+   ],
+   [
+    "digraph",
+    4
+   ],
+   [
+    "digraph",
+    5
+   ],
+   [
+    "oriented",
+    6
+   ],
+   [
+    "tournament",
+    7
+   ]
+  ],
+  "random_families": [
+   [
+    "sparse",
+    9,
+    400
+   ],
+   [
+    "dense",
+    8,
+    300
+   ],
+   [
+    "multigraph",
+    7,
+    300
+   ],
+   [
+    "planted",
+    10,
+    200
+   ],
+   [
+    "scc_dag",
+    12,
+    100
+   ],
+   [
+    "overlapping_cycles",
+    9,
+    100
+   ],
+   [
+    "tournament",
+    8,
+    200
+   ],
+   [
+    "repeated_triangle",
+    9,
+    100
+   ]
+  ],
+  "targeted": [
+   [
+    7,
+    400
+   ],
+   [
+    10,
+    200
+   ]
+  ],
+  "seed": 0,
+  "max_seconds": 600.0,
+  "max_graphs": 200000,
+  "max_component_size": 14,
+  "stop_at_first_counterexample": true,
+  "max_matches_per_graph": 64
+ },
+ "outcome_counts": {
+  "pass": 824961
+ },
+ "graphs_examined": 34082,
+ "graphs_with_matches": 34059,
+ "per_source": {
+  "exhaustive:digraph:n=1": {
+   "graphs": 1
+  },
+  "exhaustive:digraph:n=2": {
+   "graphs": 3
+  },
+  "exhaustive:digraph:n=3": {
+   "graphs": 16
+  },
+  "exhaustive:digraph:n=4": {
+   "graphs": 218,
+   "pass": 851
+  },
+  "exhaustive:digraph:n=5": {
+   "graphs": 9608,
+   "pass": 119384
+  },
+  "exhaustive:oriented:n=6": {
+   "graphs": 21480,
+   "pass": 553176
+  },
+  "exhaustive:tournament:n=7": {
+   "graphs": 456,
+   "pass": 15960
+  },
+  "random:sparse:n=9": {
+   "graphs": 400,
+   "pass": 25600
+  },
+  "random:dense:n=8": {
+   "graphs": 300,
+   "pass": 17074
+  },
+  "random:multigraph:n=7": {
+   "graphs": 300,
+   "pass": 15268
+  },
+  "random:planted:n=10": {
+   "graphs": 200,
+   "pass": 12800
+  },
+  "random:scc_dag:n=12": {
+   "graphs": 100,
+   "pass": 6400
+  },
+  "random:overlapping_cycles:n=9": {
+   "graphs": 100,
+   "pass": 6400
+  },
+  "random:tournament:n=8": {
+   "graphs": 200,
+   "pass": 11200
+  },
+  "random:repeated_triangle:n=9": {
+   "graphs": 100,
+   "pass": 6400
+  },
+  "targeted:n=7": {
+   "graphs": 400,
+   "pass": 21648
+  },
+  "targeted:n=10": {
+   "graphs": 200,
+   "pass": 12800
+  }
+ },
+ "elapsed_seconds": 469.655,
+ "stopped_reason": "exhausted all sources",
+ "matches_skipped": 91636,
+ "first_counterexample": null,
+ "first_inconclusive": null,
+ "first_invalid": null,
+ "verdict": "NO_COUNTEREXAMPLE_IN_SEARCH_SPACE"
+}

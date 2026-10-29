@@ -1,0 +1,11 @@
+{
+ "name": "smoke",
+ "seed": 1,
+ "trials": 1,
+ "count": 2,
+ "max_component": 14,
+ "plain_max_n": 10,
+ "measure_memory": false,
+ "pipelines": ["plain", "scc", "baseline", "baseline+two_cycle_cancellation", "baseline+module_contraction"],
+ "settings": [{"family": "sparse", "n": [10]}, {"family": "scc_dag", "n": [12]}]
+}
