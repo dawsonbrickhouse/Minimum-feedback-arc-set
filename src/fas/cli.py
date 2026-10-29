@@ -22,11 +22,16 @@ from .verify import verify_result
 
 
 def load_graph(path: str) -> Graph:
-    """Read a graph from JSON (``{"vertices": [...], "arcs": [[u, v], [u, v, k], ...]}``)
-    or from an edge list (``u v [multiplicity]`` per line)."""
+    """Read a graph from JSON (``{"vertices": [...], "arcs": [[u, v], [u, v, k], ...]}``, or a saved
+    counterexample record, whose ``"minimized_graph"`` is used) or from an edge list
+    (``u v [multiplicity]`` per line)."""
     text = sys.stdin.read() if path == "-" else Path(path).read_text()
-    stripped = text.lstrip()
-    return Graph.from_json(text) if stripped.startswith("{") else Graph.from_edge_list(text)
+    if not text.lstrip().startswith("{"):
+        return Graph.from_edge_list(text)
+    data = json.loads(text)
+    if "arcs" not in data and isinstance(data.get("minimized_graph"), dict):
+        data = data["minimized_graph"]
+    return Graph.from_dict(data)
 
 
 def _print(obj: object, as_json: bool) -> None:

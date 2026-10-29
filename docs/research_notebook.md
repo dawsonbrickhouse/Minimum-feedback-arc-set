@@ -142,6 +142,10 @@ Two weaknesses were found while writing the student guide. Both are fixed and te
 All earlier verdicts in this notebook had no INCONCLUSIVE cases and completed their plans. The
 standard and deep searches were rerun with the fixed harness (`final_report.md`).
 
+The cap had skipped matches for two rules: 18,579 for `three_terminal_gadget` and 192 for
+`two_terminal_separator`. Uncapped reruns checked all of them (187,480 and 145,212 passes),
+with no counterexample.
+
 ### 2026-10-29: 4-terminal span experiment
 
 - `experiments/four_terminal_rank.py`: one-internal-vertex sides span rank 20 of 24.

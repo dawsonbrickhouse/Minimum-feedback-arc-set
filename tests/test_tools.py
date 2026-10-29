@@ -38,6 +38,11 @@ def test_cli_candidates_and_search(tmp_path, capsys):
     summary = json.loads((tmp_path / "in_degree_one_contraction" / "summary.json").read_text())
     assert summary["verdict"] == "COUNTEREXAMPLE_FOUND"
     assert (tmp_path / "in_degree_one_contraction" / "in_degree_one_contraction.md").exists()
+    capsys.readouterr()
+    saved = tmp_path / "in_degree_one_contraction" / "in_degree_one_contraction.json"
+    assert main(["check", "in_degree_one_contraction", str(saved)]) == 0
+    outcomes = [json.loads(line)["outcome"] for line in capsys.readouterr().out.splitlines()]
+    assert "counterexample" in outcomes
 
 
 def test_cli_generate_and_check(tmp_path, capsys):
@@ -56,6 +61,21 @@ def test_benchmark_smoke():
     assert all(r["solution_valid"] for r in rows if r["completed"])
     assert any(not r["completed"] for r in rows)  # plain DP skipped above its limit
     assert {s["pipeline"] for s in summarize(rows)} == set(cfg["pipelines"])
+
+
+def test_summary_of_group_without_completed_runs_has_no_truth_values():
+    rows = [{"family": "f", "n": 30, "pipeline": "plain", "completed": False, "opt_agree": True}]
+    (s,) = summarize(rows)
+    assert s["completed"] == 0 and s["all_valid"] is None and s["all_agree"] is None
+
+
+def test_test_candidate_merges_index(tmp_path):
+    out = str(tmp_path / "cands")
+    for name in ("in_degree_one_contraction", "greedy_max_delta_first"):
+        assert main(["test-candidate", name, "--profile", "quick", "--no-minimize", "--out", out]) == 0
+    index = json.loads((tmp_path / "cands" / "index.json").read_text())
+    assert [e["rule"] for e in index] == ["greedy_max_delta_first", "in_degree_one_contraction"]
+    assert all(e["verdict"] == "COUNTEREXAMPLE_FOUND" and e["profile"] == "quick" for e in index)
 
 
 @pytest.mark.parametrize("bad", [

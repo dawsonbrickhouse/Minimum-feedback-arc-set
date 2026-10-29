@@ -67,6 +67,21 @@ least once. "Passes" counts matches checked, both the identity and the lift. All
 Three of the proved rules have no targeted generator, so they examine 300 fewer graphs: 10,596
 instead of 10,896.
 
+**Matches beyond the per-graph cap.** The standard profile evaluates at most 64 matches per
+graph and reports the rest as `matches_skipped`. Only two rules had any:
+
+- `three_terminal_gadget`: 18,579 skipped;
+- `two_terminal_separator`: 192 skipped.
+
+Both were rerun with no cap (`--max-matches 100000`, `results/candidates_uncapped/`):
+
+| Rule | Passes (uncapped) | Counterexamples | Inconclusive |
+|---|---|---|---|
+| `three_terminal_gadget` | 187,480 (= 168,901 + 18,579) | 0 | 0 |
+| `two_terminal_separator` | 145,212 (= 145,020 + 192) | 0 | 0 |
+
+So every match in the standard search space has been checked for every proved rule.
+
 The deep-profile results are summarised in `final_report.md`, section 4.
 
 "No counterexample" is evidence on the listed finite instances, and nothing more. The PROVED

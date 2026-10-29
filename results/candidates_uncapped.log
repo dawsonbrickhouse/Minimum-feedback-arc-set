@@ -1,1 +1,3 @@
 two_terminal_separator       NO_COUNTEREXAMPLE_IN_SEARCH_SPACE  {'pass': 145212} graphs=10896 (exhausted all sources, 27.967s)
+three_terminal_gadget        NO_COUNTEREXAMPLE_IN_SEARCH_SPACE  {'pass': 187480} graphs=10896 (exhausted all sources, 94.721s)
+UNCAPPED_DONE
