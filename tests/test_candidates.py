@@ -8,7 +8,14 @@ import pytest
 from fas.candidates import REGISTRY, Application, CandidateRule, Oracle, Status, get_rule
 from fas.generators import isomorphism_classes, random_multigraph
 from fas.graph import Graph
-from fas.harness import Outcome, SearchConfig, evaluate_graph, evaluate_match, run_search
+from fas.harness import (
+    Outcome,
+    SearchConfig,
+    evaluate_graph,
+    evaluate_graph_limited,
+    evaluate_match,
+    run_search,
+)
 from fas.minimize import counterexample_report, minimize_counterexample, save_counterexample
 
 TRUE_RULES = sorted(n for n, r in REGISTRY.items() if r.expected == "true")
@@ -87,6 +94,33 @@ def test_solver_limit_is_inconclusive_not_pass():
     assert summary.outcome_counts.get("pass", 0) == 0
     assert summary.outcome_counts.get("inconclusive", 0) > 0
     assert summary.verdict == "NO_EVIDENCE"
+
+
+def test_mixed_pass_and_inconclusive_is_not_a_clean_verdict():
+    # digraphs n <= 3 pass with component limit 2; a 3-cycle piece is inconclusive
+    cfg = SearchConfig(exhaustive=[("digraph", n) for n in range(1, 4)], random_families=[], targeted=[],
+                       max_component_size=2)
+    summary = run_search(_Toy(), cfg)
+    assert summary.outcome_counts.get("pass") and summary.outcome_counts.get("inconclusive")
+    assert summary.verdict == "INCONCLUSIVE_CASES"
+
+
+def test_search_stopped_by_limit_is_not_a_clean_verdict():
+    cfg = SearchConfig(exhaustive=[("digraph", 3)], random_families=[], targeted=[], max_graphs=5)
+    summary = run_search(_Toy(), cfg)
+    assert summary.graphs_examined == 5 and summary.verdict == "NO_COUNTEREXAMPLE_BEFORE_LIMIT"
+
+
+def test_matches_beyond_cap_are_counted_as_skipped():
+    class LastMatchWrong(_Toy):
+        def apply(self, g, match, oracle):
+            return Application(g, 1 if match["v"] == max(g.vertices) else 0)
+
+    cfg = SearchConfig(exhaustive=[], random_families=[], targeted=[], max_matches_per_graph=2)
+    g = Graph.from_arcs([(0, 1), (1, 2), (2, 0)])
+    results, skipped = evaluate_graph_limited(LastMatchWrong(), g, Oracle(), cfg.max_matches_per_graph)
+    assert [r.outcome for r in results] == [Outcome.PASS, Outcome.PASS] and skipped == 1
+    assert any(c.outcome is Outcome.COUNTEREXAMPLE for c in evaluate_graph(LastMatchWrong(), g, Oracle()))
 
 
 def test_find_matches_raising_is_malformed():

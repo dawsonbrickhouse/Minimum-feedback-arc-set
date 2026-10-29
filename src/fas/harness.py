@@ -135,15 +135,25 @@ def evaluate_match(rule: CandidateRule, g: Graph, match: Match, oracle: Oracle) 
 
 def evaluate_graph(rule: CandidateRule, g: Graph, oracle: Oracle) -> list[CaseResult]:
     """Evaluate every match of ``rule`` in ``g`` (empty list: rule not applicable)."""
+    return evaluate_graph_limited(rule, g, oracle, max_matches=None)[0]
+
+
+def evaluate_graph_limited(rule: CandidateRule, g: Graph, oracle: Oracle,
+                           max_matches: int | None) -> tuple[list[CaseResult], int]:
+    """Evaluate the first ``max_matches`` matches (all if None); also return how many were skipped."""
     try:
         matches = rule.find_matches(g)
     except Exception:  # noqa: BLE001
         return [CaseResult(rule.name, Outcome.MALFORMED, g, None,
-                           message="find_matches raised:\n" + traceback.format_exc())]
-    return [evaluate_match(rule, g, m, oracle) for m in matches]
+                           message="find_matches raised:\n" + traceback.format_exc())], 0
+    chosen = matches if max_matches is None else matches[:max_matches]
+    return [evaluate_match(rule, g, m, oracle) for m in chosen], len(matches) - len(chosen)
 
 
 # ---------------------------------------------------------------------- search driver
+
+
+EXHAUSTED = "exhausted all sources"
 
 
 @dataclass
@@ -175,12 +185,16 @@ class SearchSummary:
     per_source: dict[str, dict[str, int]]
     elapsed_seconds: float
     stopped_reason: str
+    matches_skipped: int = 0
     first_counterexample: dict[str, Any] | None = None
     first_inconclusive: dict[str, Any] | None = None
     first_invalid: dict[str, Any] | None = None
 
     @property
     def verdict(self) -> str:
+        """Most severe finding first; a clean verdict requires no inconclusive case and a completed plan.
+        Matches beyond ``max_matches_per_graph`` are outside the search space and reported as
+        ``matches_skipped``."""
         c = self.outcome_counts
         if c.get("counterexample"):
             return "COUNTEREXAMPLE_FOUND"
@@ -188,6 +202,10 @@ class SearchSummary:
             return "RULE_BUG"
         if not c.get("pass"):
             return "NO_EVIDENCE"
+        if c.get("inconclusive"):
+            return "INCONCLUSIVE_CASES"
+        if self.stopped_reason != EXHAUSTED:
+            return "NO_COUNTEREXAMPLE_BEFORE_LIMIT"
         return "NO_COUNTEREXAMPLE_IN_SEARCH_SPACE"
 
     def to_dict(self) -> dict[str, Any]:
@@ -229,10 +247,10 @@ def run_search(rule: CandidateRule, cfg: SearchConfig, checkpoint: Path | None =
     oracle = Oracle(cfg.max_component_size)
     counts: Counter[str] = Counter()
     per_source: dict[str, Counter[str]] = {}
-    examined = with_matches = 0
+    examined = with_matches = matches_skipped = 0
     first: dict[str, dict[str, Any] | None] = {"cx": None, "inc": None, "inv": None}
     start = time.monotonic()
-    stopped = "exhausted all sources"
+    stopped = EXHAUSTED
     for source, g in _sources(rule, cfg):
         if g is None:
             if source.startswith("targeted"):
@@ -247,7 +265,8 @@ def run_search(rule: CandidateRule, cfg: SearchConfig, checkpoint: Path | None =
         examined += 1
         src_counts = per_source.setdefault(source, Counter())
         src_counts["graphs"] += 1
-        results = evaluate_graph(rule, g, oracle)[: cfg.max_matches_per_graph]
+        results, skipped = evaluate_graph_limited(rule, g, oracle, cfg.max_matches_per_graph)
+        matches_skipped += skipped
         if source.startswith("targeted") and not results:
             results = [CaseResult(rule.name, Outcome.PRECONDITION_INVALID, g, None,
                                   message="targeted generator produced a graph without matches")]
@@ -274,6 +293,7 @@ def run_search(rule: CandidateRule, cfg: SearchConfig, checkpoint: Path | None =
         per_source={k: dict(v) for k, v in per_source.items()},
         elapsed_seconds=round(time.monotonic() - start, 3),
         stopped_reason=stopped,
+        matches_skipped=matches_skipped,
         first_counterexample=first["cx"],
         first_inconclusive=first["inc"],
         first_invalid=first["inv"],

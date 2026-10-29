@@ -111,7 +111,7 @@ def cmd_test_candidate(args: argparse.Namespace) -> int:
         rows.append(rec)
         extra = f" minimized n={rec['minimized_size']['n']} m={rec['minimized_size']['m']}" if "minimized_size" in rec else ""
         print(f"{name:28s} {rec['verdict']:34s} {rec['outcome_counts']} graphs={rec['graphs_examined']} "
-              f"({rec['stopped_reason']}, {rec['elapsed_seconds']}s){extra}")
+              f"({rec['stopped_reason']}, {rec['elapsed_seconds']}s){extra}", flush=True)
     _update_index(Path(args.out) / "index.json", rows, args.profile)
     return 0
 
