@@ -84,6 +84,8 @@ searches.
 | `docs/research_notebook.md` | Dated log with statuses. |
 | `docs/open_questions.md` | Open questions ranked by promise and tractability. |
 | `docs/literature_review.md` | Literature with verification tags, plus this project's own prior-art searches. |
+| `docs/literature_review_source.md` | The original literature review this project started from, kept unedited. |
+| `scripts/fas_rule_bruteforce_check.py` | Standalone brute-force checker for the elementary identities in that review (`python scripts/fas_rule_bruteforce_check.py`). |
 
 ## Layout
 
@@ -94,7 +96,8 @@ src/fas/candidates/ base.py (interface) + one module per rule family; __init__.p
 tests/              pytest suite (slow tests marked `slow`)
 experiments/        benchmark configs, run_all.sh, mining summary, 4-terminal span experiment
 results/            generated outputs (candidates/, candidates_deep/, candidates_uncapped/, mining/, benchmark/)
-scripts/            sync_to_store.sh (project-specific copy to the shared store)
+scripts/            sync_to_store.sh (project-specific copy to the shared store),
+                    fas_rule_bruteforce_check.py (checker for the original literature review)
 ```
 
 ## Rules of the road
