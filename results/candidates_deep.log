@@ -2,3 +2,8 @@ two_cycle_local_bound        NO_COUNTEREXAMPLE_IN_SEARCH_SPACE  {'pass': 29571} 
 two_cycle_cancellation       NO_COUNTEREXAMPLE_IN_SEARCH_SPACE  {'pass': 31702} graphs=34082 (exhausted all sources, 9.533s)
 module_contraction           NO_COUNTEREXAMPLE_IN_SEARCH_SPACE  {'pass': 15437} graphs=34082 (exhausted all sources, 10.717s)
 two_terminal_separator       NO_COUNTEREXAMPLE_IN_SEARCH_SPACE  {'pass': 583160} graphs=34082 (exhausted all sources, 133.668s)
+three_terminal_gadget        NO_COUNTEREXAMPLE_IN_SEARCH_SPACE  {'pass': 824961} graphs=34082 (exhausted all sources, 469.655s)
+neighborhood_dominance       NO_COUNTEREXAMPLE_IN_SEARCH_SPACE  {'pass': 116298} graphs=33482 (exhausted all sources, 14.086s)
+in_degree_one_exchange       NO_COUNTEREXAMPLE_IN_SEARCH_SPACE  {'pass': 107831} graphs=33482 (exhausted all sources, 14.505s)
+arc_domination               NO_COUNTEREXAMPLE_IN_SEARCH_SPACE  {'pass': 237404} graphs=33482 (exhausted all sources, 51.106s)
+DEEP_DONE

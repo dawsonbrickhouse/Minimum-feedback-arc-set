@@ -14,7 +14,7 @@ unweighted Minimum Feedback Arc Set:
 - a counterexample minimiser, mining tools and a benchmark;
 - a CLI and a student guide.
 
-**Tests.** 169 pass, 0 fail (72.7 s, including slow tests).
+**Tests.** 171 pass, 0 fail (72.6 s, including slow tests).
 
 **Candidates.** Eleven candidate rules were studied.
 
@@ -75,8 +75,8 @@ See `NEXT_STEPS.md` for a guided start and `adding_a_candidate.md` for adding ru
 
 ## 4. Tests and actual results
 
-Full suite on 2026-10-29: **`169 passed in 72.71s`** (`results/test_log.txt`). Without the slow
-marker: 161 passed in about 16 s.
+Full suite on 2026-10-29: **`171 passed in 72.64s`** (`results/test_log.txt`). Without the slow
+marker: 163 passed in 16.0 s.
 
 | File | Tests | What they establish |
 |---|---|---|
@@ -85,7 +85,7 @@ marker: 161 passed in about 16 s.
 | `test_graph.py` | 10 | Construction conventions; SCCs and blocks agree with NetworkX on random graphs. |
 | `test_reductions.py` | 30 | Each baseline rule alone and combined: identity plus lift optimality on all 4,096 labelled n=4 digraphs, all 9,608 n=5 classes, and random multigraphs with loops. |
 | `test_candidates.py` | 66 | See below. |
-| `test_tools.py` | 13 | See below. |
+| `test_tools.py` | 15 | See below. |
 
 `test_exact_solver.py` checks:
 
@@ -108,8 +108,8 @@ marker: 161 passed in about 16 s.
 
 `test_tools.py` checks:
 
-- CLI;
-- benchmark smoke test and config validation;
+- CLI, including replaying a saved counterexample with `fas check` and merging `index.json`;
+- benchmark smoke test, config validation and empty-group summaries;
 - mining smoke test;
 - the hand refutation of a mined hypothesis;
 - star residuals and 3-terminal gadget exactness.
@@ -121,8 +121,19 @@ proved rule: no counterexample, 0 inconclusive, 0 invalid, and every source exha
 uncapped reruns cover the matches beyond the 64-per-graph cap. Per-rule counts are in
 `candidate_rules.md`.
 
-**Deep profile** (`results/candidates_deep/`, 34,082 graphs per rule where completed, 600 s cap
-per rule): see the table in §7.
+**Deep profile** (`results/candidates_deep/`, 600 s cap per rule). Every proved rule completed
+its plan within the cap, with no counterexample and 0 inconclusive. Rules with a targeted
+generator examined 34,082 graphs; the others examined 33,482.
+
+The deep search adds:
+
+- all 21,480 oriented graphs on 6 vertices;
+- all 456 tournaments on 7 vertices;
+- larger random graphs (n up to 12).
+
+Per-rule counts are in §7. The deep runs kept the 64-match cap, so 91,636 matches
+(`three_terminal_gadget`) and 2,289 matches (`two_terminal_separator`) were not checked. They
+are reported as `matches_skipped`.
 
 ## 5. What is known correct, and why
 
@@ -158,14 +169,14 @@ history in `research_notebook.md`.
 
 | Rule | Status | Standard passes | Deep profile |
 |---|---|---|---|
-| `two_cycle_local_bound` | PROVED, NOVELTY_UNVERIFIED (trivial corollary of the next rule plus source deletion) | 27,695 | DEEP_TLB |
-| `two_cycle_cancellation` | PROVED, PRIOR_ART_FOUND (Brandenburg–Hanauer 2011) | 27,440 | DEEP_TCC |
-| `module_contraction` | PROVED, NOVELTY_UNVERIFIED (likely folklore) | 4,935 | DEEP_MC |
-| `two_terminal_separator` | PROVED, PRIOR_ART_FOUND (Nutov–Penn 2000, abstract) | 145,212 (uncapped) | DEEP_TTS |
-| `three_terminal_gadget` | PROVED, NOVELTY_UNVERIFIED | 187,480 (uncapped) | DEEP_3TG |
-| `neighborhood_dominance` | PROVED, NOVELTY_UNVERIFIED | 20,827 | DEEP_ND |
-| `in_degree_one_exchange` | PROVED, NOVELTY_UNVERIFIED (review R9 [OWN]) | 24,968 | DEEP_IDE |
-| `arc_domination` | PROVED, NOVELTY_UNVERIFIED (review R16 [OWN]) | 58,672 | DEEP_AD |
+| `two_cycle_local_bound` | PROVED, NOVELTY_UNVERIFIED (trivial corollary of the next rule plus source deletion) | 27,695 | 29,571 passes / 34,082 graphs |
+| `two_cycle_cancellation` | PROVED, PRIOR_ART_FOUND (Brandenburg–Hanauer 2011) | 27,440 | 31,702 / 34,082 |
+| `module_contraction` | PROVED, NOVELTY_UNVERIFIED (likely folklore) | 4,935 | 15,437 / 34,082 |
+| `two_terminal_separator` | PROVED, PRIOR_ART_FOUND (Nutov–Penn 2000, abstract) | 145,212 (uncapped) | 583,160 / 34,082 (2,289 matches over the cap not checked) |
+| `three_terminal_gadget` | PROVED, NOVELTY_UNVERIFIED | 187,480 (uncapped) | 824,961 / 34,082 (91,636 matches over the cap not checked) |
+| `neighborhood_dominance` | PROVED, NOVELTY_UNVERIFIED | 20,827 | 116,298 / 33,482 |
+| `in_degree_one_exchange` | PROVED, NOVELTY_UNVERIFIED (review R9 [OWN]) | 24,968 | 107,831 / 33,482 |
+| `arc_domination` | PROVED, NOVELTY_UNVERIFIED (review R16 [OWN]) | 58,672 | 237,404 / 33,482 |
 | `arc_disjoint_cycle_bound` | COUNTEREXAMPLE_FOUND | — | — |
 | `in_degree_one_contraction` | COUNTEREXAMPLE_FOUND (also in the review) | — | — |
 | `greedy_max_delta_first` | COUNTEREXAMPLE_FOUND | — | — |

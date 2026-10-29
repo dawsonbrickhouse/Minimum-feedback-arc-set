@@ -52,7 +52,7 @@ multiplicity. Use `-` to read stdin.
 | `fas candidates [NAME]` | List the candidate rules with their statuses, or print one rule's card. |
 | `fas check NAME G` | Evaluate one candidate at every match in one graph. |
 | `fas test-candidate NAME\|all --profile quick\|standard\|deep` | Bounded counterexample search. Writes `summary.json`, a minimised counterexample if one is found, and `index.json`. |
-| `fas mine vertex\|arc\|boundary ...` | Exploratory mining over exhaustive small graphs (`docs/final_report.md` §5). |
+| `fas mine vertex\|arc\|boundary ...` | Exploratory mining over exhaustive small graphs (`docs/final_report.md` §9). |
 | `fas benchmark --config experiments/benchmark_default.json --out results/benchmark` | Reproducible benchmark. |
 
 Example:

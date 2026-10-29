@@ -82,7 +82,19 @@ Both were rerun with no cap (`--max-matches 100000`, `results/candidates_uncappe
 
 So every match in the standard search space has been checked for every proved rule.
 
-The deep-profile results are summarised in `final_report.md`, section 4.
+**Deep profile** (2026-10-29, `results/candidates_deep/`). Every proved rule exhausted its plan
+within the 600 s cap, with no counterexample and 0 inconclusive.
+
+| Rule | Graphs | Passes | Matches over the cap (not checked) |
+|---|---|---|---|
+| `two_cycle_local_bound` | 34,082 | 29,571 | 0 |
+| `two_cycle_cancellation` | 34,082 | 31,702 | 0 |
+| `module_contraction` | 34,082 | 15,437 | 0 |
+| `two_terminal_separator` | 34,082 | 583,160 | 2,289 |
+| `three_terminal_gadget` | 34,082 | 824,961 | 91,636 |
+| `neighborhood_dominance` | 33,482 | 116,298 | 0 |
+| `in_degree_one_exchange` | 33,482 | 107,831 | 0 |
+| `arc_domination` | 33,482 | 237,404 | 0 |
 
 "No counterexample" is evidence on the listed finite instances, and nothing more. The PROVED
 statuses rest on `proof_obligations.md`, not on these searches.
